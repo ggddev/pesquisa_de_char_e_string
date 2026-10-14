@@ -160,7 +160,7 @@ int numero = textoNumero.toInt();
 Serial.println(numero * 2);
 
 //TODO verificando se a String esta vazia
-String textoVazio = "";
+String textoVazio = " ";
 if(textoVazio.length() == 0) Serial.println("O texto está vazio");
 else Serial.println("O texto não esta vazio");
 
@@ -168,4 +168,78 @@ else Serial.println("O texto não esta vazio");
 //? Isto é util quando alguma biblioteca espera texto do estilo C
 const char* textoComoChar = mensagem.c_str();
 Serial.println(textoComoChar);
+
+// Montando texto
+char buffer[100];
+char* local = "Sala de Aula";
+float temperatura = 26.4;
+int umidade = 58;
+
+// aqui (snprintf) informa qual o tamanho do buffer, se colocar algo maior q o buffer ela limita
+// esse sizeof(buffer) mostra o tamanho do buffer, aqui seria 100 até o momento atual.
+// (buffer) = escreve o texto aqui
+// (sizeof(buffer)) = define o tamanho do texto
+// "%s | Temp: %f | Umid.: %d %% \n\r" = cria o texto
+//  local, temperatura, umidade = variaveis que serao usadas nos %
+snprintf(buffer, sizeof(buffer), "%s | Temp: %f | Umid.: %d %% \n\r", local, temperatura, umidade);
+//? O '\n' muda a linha 
+//? O '\r' volta para o começo da linha
+
+/*
+! snprintf Monta um texto dentro de um vetor de char
+! Sintaxe: snprintf(variavelOndeSeraMontadoOTexto, TamanhoMaximoDoTexto, TextoComEspecificadores, ItensDeFormato)
+
+
+todo|   %s = string
+todo|   %f = float
+todo|   %d = int ou double
+todo|   %% = é o porcento mesmo ou formatação               */
+
+Serial.print(buffer);
+
+// aqui nao informa o tamanho do buffer, e se vier algo maior que o buffer ela não limita, gerando um vazamento de mem.
+//! NÂO É SEGURA
+//sprintf;
+
+
+/*
+ ESPECIFICADORES
+- %d OU %i == int
+- %u == unsigned int
+- %ld == long
+- %lu == unsigned long
+- %f == float
+- %e == notação cientifica
+- %g == float, formato mais curto
+- %c == char
+- %s == char* (string)
+- %x OU %X == hexadecimal minusculo/maiusculo
+- %o == octal
+- %p == ponteiro
+- %% == o próprio %
+
+
+
+
+
+LARGURA, FLAGS, PRECISÃO
+
+ - %5d == imprime com largura minima de 5 alinhado a direita [    3], [  100]
+ - %-2d == imprime com largura minima de 2 alinhado a esquerda [3   ], [100 ]
+ - %03d == completa com zeros a esquerda [003]
+ - %+d == sempre mostra o sinal [+3] [-3]
+ - %.2f == 2 casas decimais no float
+ - %4.2f == largura minima é 4 com 2 casas decimais
+ - %02X == exadecimal com 2 digitos  [0F] [3A]
+ - %#x == imprime o prefixo 0x [0x2a] [0xF]
+ - %.3s == somnte os 3 primeiros caracteres da string
+
+ int largura = 3;
+ int numero = 9;
+ - %*d == largura passada como argumento ex: snprintf(buffer, sizeof(buffer), "numero %*d", largura, numero)
+ Serial.print(buffer) -> [  9]
+*/
+
+
+
 }
